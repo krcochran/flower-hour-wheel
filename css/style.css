@@ -564,6 +564,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+.modal-backdrop[hidden] { display: none; }
 .modal {
   background: var(--white);
   border-radius: var(--radius-xl);
