@@ -133,13 +133,14 @@ const FHWheel = (() => {
     ctx.fill();
   }
 
-  function spin(segments, onResult) {
+  function spin(weightedPool, segments, onResult) {
     if (spinning || segments.length === 0) return;
     spinning = true;
     onResultCb = onResult;
 
-    // Pick winning index based on weighted random (segments already have duplicates)
-    const winnerIdx = Math.floor(Math.random() * segments.length);
+    // Pick winner from FULL weighted pool — duplicates give higher probability
+    const winner = weightedPool[Math.floor(Math.random() * weightedPool.length)];
+    const winnerIdx = segments.indexOf(winner);
     const numSegs = segments.length;
     const arc = (Math.PI * 2) / numSegs;
 

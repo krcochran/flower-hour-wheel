@@ -126,7 +126,7 @@
 
     const uniqueNames = [...new Set(spinPool)];
 
-    FHWheel.spin(uniqueNames, (winner) => {
+    FHWheel.spin(spinPool, uniqueNames, (winner) => {
       lastWinner = winner;
       FHData.recordSpin(winner);
       FHUI.showResult(winner);
