@@ -89,7 +89,7 @@ body {
 .site-logo {
   height: 56px;
   width: auto;
-  filter: brightness(0) saturate(100%) invert(22%) sepia(22%) saturate(700%) hue-rotate(60deg) brightness(60%);
+  mix-blend-mode: multiply;
 }
 .site-tagline {
   font-family: var(--font-display);

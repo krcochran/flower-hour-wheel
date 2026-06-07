@@ -177,13 +177,9 @@ const FHWheel = (() => {
         draw(segments, currentAngle);
         spinning = false;
 
-        // Determine actual winner from final angle
-        // After spinning, pointer at top = angle 0 relative to canvas top
-        // Segment at pointer = the one whose arc covers -π/2 (top)
-        const normalised = ((currentAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-        const pointerAngle = (Math.PI * 1.5 - normalised + Math.PI * 2) % (Math.PI * 2);
-        const winIdx = Math.floor(pointerAngle / arc) % numSegs;
-        if (onResultCb) onResultCb(segments[winIdx]);
+        // Report the winner that was pre-selected from the weighted pool.
+        // The wheel animation already landed on the correct slice visually.
+        if (onResultCb) onResultCb(winner);
       }
     }
 
