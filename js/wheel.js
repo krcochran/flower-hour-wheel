@@ -138,28 +138,41 @@ const FHWheel = (() => {
     spinning = true;
     onResultCb = onResult;
 
-    // Pick winner from FULL weighted pool — duplicates give higher probability
+    // 1. Pick winner from the FULL weighted pool (duplicates = higher probability)
     const winner = weightedPool[Math.floor(Math.random() * weightedPool.length)];
     const winnerIdx = segments.indexOf(winner);
     const numSegs = segments.length;
     const arc = (Math.PI * 2) / numSegs;
 
-    // Target: winning segment should land at top (angle = -π/2 = pointer position)
-    // Pointer is at top. Segment i occupies [currentAngle + i*arc, currentAngle + (i+1)*arc].
-    // We want winnerIdx slice midpoint at top (-π/2).
-    const targetSliceMid = -(winnerIdx + 0.5) * arc;
+    // 2. Work out the final resting angle so the pointer (at canvas top = -PI/2)
+    //    lands exactly in the CENTER of the winning segment.
+    //
+    //    When the wheel is drawn at angle `a`, segment i spans:
+    //      [a + i*arc,  a + (i+1)*arc]
+    //    Its midpoint is at: a + (i + 0.5) * arc
+    //
+    //    We want that midpoint to equal -PI/2 (top of canvas, where pointer is):
+    //      finalAngle + (winnerIdx + 0.5) * arc = -PI/2  (mod 2PI)
+    //    =>  finalAngle = -PI/2 - (winnerIdx + 0.5) * arc
+    //
+    //    Add enough full rotations so the wheel spins visibly (8-13 full turns).
     const extraSpins = (8 + Math.floor(Math.random() * 6)) * Math.PI * 2;
-    const finalAngle = targetSliceMid + extraSpins;
-
+    const targetAngle = -Math.PI / 2 - (winnerIdx + 0.5) * arc;
+    // Normalise so we always spin forward from currentAngle
     const startAngle = currentAngle;
-    const totalDelta = finalAngle - (startAngle % (Math.PI * 2));
-    const adjustedFinal = startAngle + totalDelta + extraSpins;
+    let delta = (targetAngle - startAngle) % (Math.PI * 2);
+    if (delta > 0) delta -= Math.PI * 2;   // ensure we go forward (negative = CCW visually but canvas is CW)
+    // Actually canvas arc goes clockwise, we want to add angle (spin forward)
+    // Recalculate: spin forward means increasing angle.
+    // Target must be > startAngle after adding full rotations.
+    let forwardTarget = targetAngle;
+    while (forwardTarget <= startAngle) forwardTarget += Math.PI * 2;
+    const adjustedFinal = forwardTarget + extraSpins;
 
     const duration = 4000 + Math.random() * 1500;
     const startTime = performance.now();
 
     function easeOut(t) {
-      // Cubic ease-out
       return 1 - Math.pow(1 - t, 3);
     }
 
@@ -173,12 +186,10 @@ const FHWheel = (() => {
       if (t < 1) {
         animationId = requestAnimationFrame(frame);
       } else {
-        currentAngle = adjustedFinal % (Math.PI * 2);
+        currentAngle = adjustedFinal;
         draw(segments, currentAngle);
         spinning = false;
-
-        // Report the winner that was pre-selected from the weighted pool.
-        // The wheel animation already landed on the correct slice visually.
+        // Report the pre-selected weighted winner — the wheel has landed on their slice.
         if (onResultCb) onResultCb(winner);
       }
     }

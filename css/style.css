@@ -86,10 +86,27 @@ body {
   padding: 1.5rem 2rem 0.5rem;
   background: linear-gradient(180deg, var(--cream) 0%, transparent 100%);
 }
-.site-logo {
-  height: 56px;
-  width: auto;
-  mix-blend-mode: multiply;
+.site-logo-text {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 3.2rem;
+  font-weight: 400;
+  color: #3d4a1f;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.logo-word {
+  color: #3d4a1f;
+}
+.logo-flower {
+  color: #f4a95a;
+  font-size: 1.4rem;
+  margin: 0 0.05em;
+  display: inline-block;
+  transform: translateY(-2px);
 }
 .site-tagline {
   font-family: var(--font-display);
