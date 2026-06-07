@@ -103,25 +103,11 @@ body {
 }
 .logo-flower {
   color: #f4a95a;
-  font-size: 1.4rem;
-  margin: 0 0.05em;
+  font-size: 1em;
   display: inline-block;
-  transform: translateY(-2px);
-}
-.logo-o {
-  position: relative;
-  display: inline-block;
-  color: #3d4a1f;
-}
-.logo-o::before {
-  content: '✿';
-  position: absolute;
-  top: -1.05em;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.42em;
-  color: #f4a95a;
+  vertical-align: baseline;
   line-height: 1;
+  margin: 0 0.02em;
 }
 .site-tagline {
   font-family: var(--font-display);
