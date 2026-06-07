@@ -108,6 +108,21 @@ body {
   display: inline-block;
   transform: translateY(-2px);
 }
+.logo-o {
+  position: relative;
+  display: inline-block;
+  color: #3d4a1f;
+}
+.logo-o::before {
+  content: '✿';
+  position: absolute;
+  top: -1.05em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.42em;
+  color: #f4a95a;
+  line-height: 1;
+}
 .site-tagline {
   font-family: var(--font-display);
   font-style: italic;
