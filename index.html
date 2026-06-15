@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css?v=7" />
+  <link rel="stylesheet" href="css/style.css?v=8" />
   <style>[hidden] { display: none !important; }</style>
 </head>
 <body>
@@ -43,7 +43,7 @@
           type="text"
           id="nameInput"
           class="name-input"
-          placeholder="Enter a name…"
+          placeholder="Name, or Name 3 to add 3 entries…"
           autocomplete="off"
         />
         <button class="btn btn-add" id="btnAdd" title="Add name">
@@ -54,7 +54,7 @@
 
       <!-- Bulk import -->
       <div class="bulk-group">
-        <textarea id="bulkInput" class="bulk-input" placeholder="Paste multiple names (one per line) for bulk import…" rows="3"></textarea>
+        <textarea id="bulkInput" class="bulk-input" placeholder="Amy&#10;Evan 5&#10;Sarah 3&#10;(name or name + count per line)" rows="4"></textarea>
         <button class="btn btn-secondary" id="btnBulk">Import List</button>
       </div>
 

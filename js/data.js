@@ -59,10 +59,22 @@ const FHData = (() => {
   }
 
   function addBulk(text, tags = []) {
-    const names = text.split('\n').map(s => s.trim()).filter(Boolean);
-    names.forEach(n => addEntry(n, tags));
+    const lines = text.split('\n').map(s => s.trim()).filter(Boolean);
+    let added = 0;
+    lines.forEach(line => {
+      const match = line.match(/^(.+?)\s+[x×]?(\d+)$/i);
+      if (match) {
+        const name = match[1].trim();
+        const count = Math.min(Math.max(parseInt(match[2], 10), 1), 100);
+        for (let i = 0; i < count; i++) addEntry(name, tags);
+        added += count;
+      } else {
+        addEntry(line, tags);
+        added++;
+      }
+    });
     save();
-    return names.length;
+    return added;
   }
 
   function removeEntry(id) {

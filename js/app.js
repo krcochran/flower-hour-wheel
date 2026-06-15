@@ -33,12 +33,26 @@
     FHWheel.redraw(uniqueNames);
   }
 
+  // ── Parse "Name 3" or "Name" from a single input string ──
+  function parseNameAndCount(raw) {
+    const trimmed = raw.trim();
+    if (!trimmed) return null;
+    // Match trailing integer, e.g. "Amy 7" or "Amy x7" or "Amy ×7"
+    const match = trimmed.match(/^(.+?)\s+[x×]?(\d+)$/i);
+    if (match) {
+      const name = match[1].trim();
+      const count = Math.min(Math.max(parseInt(match[2], 10), 1), 100);
+      return { name, count };
+    }
+    return { name: trimmed, count: 1 };
+  }
+
   // ── Add name ────────────────────────────────────────────
   function addNameFromInput() {
     const input = document.getElementById('nameInput');
-    const name = input.value.trim();
-    if (!name) return;
-    FHData.addEntry(name);
+    const parsed = parseNameAndCount(input.value);
+    if (!parsed) return;
+    for (let i = 0; i < parsed.count; i++) FHData.addEntry(parsed.name);
     input.value = '';
     input.focus();
     refresh();
